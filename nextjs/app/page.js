@@ -1,14 +1,27 @@
-import * as Typography from "@/components/ui/typography";
+import Footer from "@/components/biochemreg/Footer";
+import Header from "@/components/biochemreg/Header";
+import About from "@/components/biochemreg/home/About";
+import Contact from "@/components/biochemreg/home/Contact";
+import Hero from "@/components/biochemreg/home/Hero";
+import Network from "@/components/biochemreg/home/Network";
+import News from "@/components/biochemreg/home/News";
+import Publications from "@/components/biochemreg/home/Publications";
+import Research from "@/components/biochemreg/home/Research";
+import Team from "@/components/biochemreg/home/Team";
 
-export default function Profile() {
+export default function Home() {
     return (
         <>
-            <div className="p-6">
-                <Typography.H1>Profile Page</Typography.H1>
-                <Typography.P>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec auctor, nisl eget ultricies lacinia, nunc nisl aliquam nunc, eget aliquam nisl nunc vel nisl. Donec auctor, nisl eget ultricies lacinia, nunc nisl aliquam nunc, eget aliquam nisl nunc vel nisl.
-                </Typography.P>
-            </div>
+            <Header />
+            <Hero />
+            <About />
+            <Research />
+            <Publications />
+            <Team />
+            <News />
+            <Network />
+            <Contact />
+            <Footer />
         </>
     )
 };

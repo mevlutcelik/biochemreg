@@ -7,7 +7,6 @@ import { Bell, LogOut, Sparkles } from "lucide-react";
 import { LogoutDialog } from "./LogoutDialog";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Button } from "./ui/button";
-import { ThemeToggle } from "./theme/ThemeToggle";
 
 const SidebarFooter = () => {
     const user = useUserContext();
@@ -75,21 +74,20 @@ const SidebarFooter = () => {
                             </div>
                         </div>
                     </DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <ThemeToggle fullButton={true} />
+                    {/* <DropdownMenuSeparator /> */}
                     {/* <DropdownMenuGroup>
                         <DropdownMenuItem className="cursor-not-allowed opacity-50 pointer-events-none">
                             <Sparkles />
                             Agent Mode (Yakında)
                         </DropdownMenuItem>
                     </DropdownMenuGroup> */}
-                    <DropdownMenuSeparator />
+                    {/* <DropdownMenuSeparator />
                     <DropdownMenuGroup>
                         <DropdownMenuItem className="cursor-not-allowed opacity-50 pointer-events-none">
                             <Bell />
                             Bildirimler
                         </DropdownMenuItem>
-                    </DropdownMenuGroup>
+                    </DropdownMenuGroup> */}
                     <DropdownMenuSeparator />
                     <DropdownMenuGroup asChild>
                         <Button className="w-full justify-start cursor-pointer text-destructive hover:text-destructive" variant="ghost" onClick={showDialog}>

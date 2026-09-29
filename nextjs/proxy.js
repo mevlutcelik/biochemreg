@@ -5,65 +5,55 @@ export async function proxy(request) {
     const { pathname } = request.nextUrl;
     const token = request.cookies.get('token')?.value;
 
-    // 1. Statik dosyalar ve Next iç dosyaları
-    if (
-        pathname.startsWith('/_next') ||
-        pathname.startsWith('/static') ||
-        pathname.includes('.')
-    ) {
+    // 2. Statik dosyaları atla
+    if (pathname.startsWith('/_next') || pathname.startsWith('/static') || pathname.includes('.')) {
         return NextResponse.next();
     }
 
     const isLoginPage = pathname === '/login';
     const isHomePage = pathname === '/';
+    const isRegisterPage = pathname === '/register';
+    const isPublicPage =
+        isHomePage ||
+        isLoginPage ||
+        isRegisterPage ||
+        pathname.startsWith('/team') ||
+        pathname.startsWith('/members') ||
+        pathname.startsWith('/director');
 
-    // 2. Token YOKSA → sadece login ve home serbest
+    // 4. Token YOKSA
     if (!token) {
-        if (isLoginPage || isHomePage) return NextResponse.next();
-
+        if (isPublicPage) return NextResponse.next();
         return NextResponse.redirect(new URL('/login', request.url));
     }
 
+    // 5. Token VARSA (Auth Kontrolü)
     try {
-        // 3. Token doğrulama
         const result = await get({
             endpoint: 'auth/verify-token',
             bearerToken: token,
         });
 
-        // 4. Token geçersizse
         if (!result || !result.status) {
             const response = NextResponse.redirect(new URL('/login', request.url));
             response.cookies.delete('token');
             return response;
         }
 
-        // 5. Token VARSA
-        // Login sayfasına girerse dashboarda at
         if (isLoginPage) {
             return NextResponse.redirect(new URL('/dashboard', request.url));
         }
 
-        // Home sayfası serbest (ister loginli ister değil)
-        if (isHomePage) {
-            return NextResponse.next();
-        }
-
-        // Diğer sayfalar serbest
         return NextResponse.next();
 
     } catch (error) {
         console.error("Proxy Hatası:", error.message);
-
         const response = NextResponse.redirect(new URL('/login', request.url));
         response.cookies.delete('token');
         return response;
     }
 }
 
-// 6. Matcher
 export const config = {
-    matcher: [
-        '/((?!api|_next/static|_next/image|favicon.ico).*)',
-    ],
+    matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
 };

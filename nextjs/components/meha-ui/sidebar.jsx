@@ -74,8 +74,8 @@ export function Sidebar({
         )}
       >
         {/* HEADER */}
-        <div className="flex items-center justify-between pl-6 pr-4 h-14 border-b border-sidebar-border">
-          <Logo />
+        <div className="flex items-center justify-between pl-6 pr-4 h-16 border-b border-sidebar-border">
+          <Logo href="/dashboard" />
 
           {isMobile && (
             <Button
@@ -90,7 +90,12 @@ export function Sidebar({
         </div>
 
         {/* CONTENT (MULTI GROUP) */}
-        <div className="flex flex-col gap-8 py-6 px-4">
+        <div className="flex flex-col gap-8 py-6 px-4 max-h-[calc(100vh-9rem)] overflow-y-auto scroll-smooth
+        [&::-webkit-scrollbar]:w-1.5
+  [&::-webkit-scrollbar-track]:rounded-0
+  [&::-webkit-scrollbar-track]:bg-muted-foreground/10
+  [&::-webkit-scrollbar-thumb]:rounded-0
+  [&::-webkit-scrollbar-thumb]:bg-muted-foreground/20">
           {menuGroups.map((group) => (
             <div key={group.title} className="flex flex-col gap-2">
 
@@ -114,7 +119,7 @@ export function Sidebar({
         </div>
 
         {/* FOOTER */}
-        <div className="absolute bottom-0 w-full border-t p-4">
+        <div className="bg-sidebar absolute bottom-0 w-full border-t h-20 px-4 flex items-center justify-center">
           {footer}
         </div>
       </aside>
